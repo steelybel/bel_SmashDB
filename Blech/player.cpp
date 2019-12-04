@@ -39,7 +39,7 @@ void Player::print()
 		belPrintLine(tag);
 	}
 	belPrint("Character: ");
-	belPrintLine(playerMain);
+	belPrintLine(characters2[playerMain]);
 	belPrint(wins);
 	belPrint("wins, ");
 	belPrint(losses);
@@ -61,13 +61,14 @@ void PlayerDB::addPlayer()
 	char sponsor[20];
 	int main;
 	belPrint("Player name >");
-	std::cin >> name;
+	std::cin.getline(name, 20);
 	belPrintLine("");
 	belPrint("Player sponsor >");
-	std::cin >> sponsor;
+	std::cin.getline(sponsor, 20);
 	belPrintLine("");
 	belPrint("Player main >");
 	std::cin >> main;
+	characters mainPick = static_cast<characters>(main);
 	belPrintLine("");
 	bool foo = false;
 	for (int c = 0; c < 200; c++)
@@ -75,11 +76,12 @@ void PlayerDB::addPlayer()
 		if (foo) break;
 		if (players[c].tag == 0)
 		{
-			players[c] = Player{ name, sponsor, main, 0, 0 };
 			foo = true;
-			break;
+			players[c] = Player{ name, sponsor, mainPick, 0, 0 };
+			continue;
 		}
 	}
+	belPrintLine("flushed emoji");
 }
 
 void PlayerDB::showPlayer(int num)

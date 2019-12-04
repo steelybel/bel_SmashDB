@@ -10,10 +10,9 @@ int main()
 	{
 		for (int p = 0; p < 200; p++)
 		{
-			//data.showPlayer(p);
+			data.showPlayer(p);
 		}
 		data.addPlayer();
 	}
-
 	return 0;
 }
