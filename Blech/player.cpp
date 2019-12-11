@@ -88,6 +88,98 @@ void Player::print(int n)
 	}
 }
 
+//Allows user to update or correct information on a player.
+void Player::edit()
+{
+	string input2 = "";
+	belPrint(">");
+	getline(std::cin, input2);
+	if (input2 == "tag")
+	{
+		//Prompts for a new tag, which then replaces the old one.
+		string newTag = "";
+		belPrint("Enter new tag >");
+		getline(std::cin, newTag);
+		if (newTag != "")
+		{
+			belPrintLine("");
+			belPrint("Changed tag: ");
+			belPrint(tag);
+			changeName(newTag);
+			belPrint(" -> ");
+			belPrintLine(tag);
+		}
+	}
+	if (input2 == "sponsor")
+	{
+		//Prompts for a new team name, which then replaces the old one.
+		string newTeam = "";
+		belPrint("Enter new team/sponsor >");
+		getline(std::cin, newTeam);
+		if (newTeam != "")
+		{
+			changeSponsor(newTeam);
+			belPrintLine("");
+			belPrint("Changed team/sponsor of ");
+			belPrint(tag);
+			belPrint(" to ");
+			belPrint(sponsor);
+			belPrintLine(".");
+		}
+	}
+	if (input2 == "main")
+	{
+		//Prompts for a new character, replacing the previous.
+		string newMain = "";
+		bool mainValid = false;
+		while (!mainValid)
+		{
+			belPrint("Enter new main >");
+			getline(std::cin, newMain);
+			for (int c = 0; c < 26; c++)
+			{
+				if (newMain == characters2[c])
+				{
+					mainValid = true;
+					playerMain = c;
+					break;
+				}
+
+			}
+			if (mainValid) break;
+			else
+			{
+				belPrintLine("Not a valid character.");
+			}
+		}
+		belPrintLine("");
+		belPrint("Changed main of ");
+		belPrint(tag);
+		belPrint(" to ");
+		belPrint(characters2[playerMain]);
+		belPrintLine(".");
+	}
+	if (input2 == "win")
+	{
+		int win = 0;
+		belPrintLine("How many wins?");
+		cin >> win;
+		addWins(win);
+	}
+	if (input2 == "loss")
+	{
+		int loss = 0;
+		belPrintLine("How many losses?");
+		cin >> loss;
+		addLosses(loss);
+	}
+	if (input2 == "back")
+	{
+		return;
+	}
+	//cin.ignore(INT_MAX, '\n');
+}
+
 void Player::addWins(int win)
 {
 	wins += win;
@@ -135,15 +227,38 @@ void PlayerDB::textParser()
 	system("CLS");
 	if (input == "help")
 	{
-		belPrintLine("- add - add new player to database");
-		belPrintLine("- show - show one player's stats");
-		belPrintLine("- showall - show all players' stats");
-		belPrintLine("- find - search for players by tag");
-		belPrintLine("- edit - edit one player's stats");
+		belPrintLine(" - add		- add new player to database (using numerical ID)");
+		belPrintLine(" - remove		- remove player from database (using numerical ID)");
+		belPrintLine(" - show		- show one player's stats (using numerical ID)");
+		belPrintLine(" - showall	- show all players' stats");
+		belPrintLine(" - find		- search for players by tag (use this to quickly retrieve numerical IDs)");
+		belPrintLine(" - edit		- edit one player's stats (using numerical ID)");
 	}
 	if (input == "add")
 	{
 		addPlayer();
+	}
+	if (input == "remove")
+	{
+		belPrint("Enter player numerical ID >");
+		int rem = 0;
+		cin >> rem;
+		belPrintLine("");
+		belIgnore();
+		showPlayer(rem);
+		if (players[rem].tag != "")
+		{
+			belPrint("Are you sure you want to delete this player entry? (Y/N) >");
+			string typein = "n";
+			getline(std::cin, typein);
+			if (typein == "y" || typein == "Y")
+			{
+				belPrintLine("");
+				belPrint(players[rem].tag);
+				belPrintLine(" removed from database.");
+				removePlayer(rem);
+			}
+		}
 	}
 	if (input == "show")
 	{
@@ -166,10 +281,11 @@ void PlayerDB::textParser()
 		{
 			belPrintLine("");
 			belPrintLine("Edit options:");
-			belPrintLine(" - tag - Change player's tag");
-			belPrintLine(" - sponsor - Change player's team/sponsor");
-			belPrintLine(" - win - Add wins to player");
-			belPrintLine(" - loss - Add losses to player");
+			belPrintLine(" - tag		- Change player's tag");
+			belPrintLine(" - sponsor	- Change player's team/sponsor");
+			belPrintLine(" - main		- Change player's main character");
+			belPrintLine(" - win		- Add wins to player");
+			belPrintLine(" - loss		- Add losses to player");
 			players[edit].edit();
 		}
 	}
@@ -183,89 +299,76 @@ void PlayerDB::textParser()
 		belPrint("Enter player's tag. All matching results will be shown.");
 		getline(std::cin, find);
 		belPrintLine("");
-		belIgnore();
 		findPlayer(find);
 
 	}
 }
-void Player::edit()
-{
-	string input2 = "";
-	belPrint(">");
-	getline(std::cin, input2);
-	if (input2 == "tag")
-	{
-		//Prompts for a new tag, which then replaces the old one.
-		string newTag = "";
-		belPrint("Enter new tag >");
-		getline(std::cin, newTag);
-		if (newTag != "")
-		{
-			changeName(newTag);
-		}
-	}
-	if (input2 == "sponsor")
-	{
-		//Prompts for a new team name, which then replaces the old one.
-		string newTeam = "";
-		belPrint("Enter new team/sponsor >");
-		getline(std::cin, newTeam);
-		if (newTeam != "")
-		{
-			changeSponsor(newTeam);
-		}
-	}
-	if (input2 == "win")
-	{
-		int win = 0;
-		belPrintLine("How many wins?");
-		cin >> win;
-		addWins(win);
-	}
-	if (input2 == "loss")
-	{
-		int loss = 0;
-		belPrintLine("How many losses?");
-		cin >> loss;
-		addLosses(loss);
-	}
-	if (input2 == "back")
-	{
-		return;
-	}
-	//cin.ignore(INT_MAX, '\n');
-}
+
 void PlayerDB::addPlayer()
 {
+	//Initialize player values
 	string name = "";
 	string sponsor = "";
+	string main_ = "";
+	bool mainValid = false;
 	int main;
+
+	//Take user input
 	belPrint("Player name >");
 	getline(std::cin,name);
 	belPrintLine("");
 	belPrint("Player team/sponsor >");
 	getline(std::cin, sponsor);
 	belPrintLine("");
-	belPrint("Player main >");
-	cin >> main;
-	characters mainPick = static_cast<characters>(main);
+
+	//If user types in a character not available, they are prompted again.
+	while (mainValid == false)
+	{
+		belPrint("Player main (case sensitive) >");
+		getline(std::cin, main_);
+		for (int c = 0; c < 26; c++)
+		{
+			if (main_ == characters2[c])
+			{
+				mainValid = true;
+				main = c;
+				break;
+			}
+			
+		}
+		if (mainValid) break;
+		else
+		{
+			belPrintLine("Not a valid character.");
+		}
+	}
+
 	belPrintLine("");
-	belIgnore();
 	bool foo = false;
+	//Searches for the first "empty" index in the array
 	for (int c = 0; c < 200; c++)
 	{
 		if (foo) break;
 		if (players[c].tag == "")
 		{
-			foo = true;
-			players[c].set(name, sponsor, mainPick, 0, 0);
+			//Initialize player with user values
+			players[c].set(name, sponsor, main, 0, 0);
 			belPrint("Player ");
 			belPrint(name);
 			belPrintLine(" added to database.");
+			foo = true;
 			break;
 		}
 	}
 }
+
+//Empties a player entry, effectively deleting them.
+//The index is freed, so the next player added will take their place.
+void PlayerDB::removePlayer(int player)
+{
+	players[player] = Player();
+}
+
 void PlayerDB::findPlayer(string input)
 {
 	int matches = 0;
@@ -274,7 +377,7 @@ void PlayerDB::findPlayer(string input)
 		if (players[p].tag == input)
 		{
 			matches++;
-			players[p].print();
+			showPlayer(p);
 		}
 	}
 	belPrint("Found ");

@@ -10,19 +10,28 @@ using std::string;
 struct Player
 {
 	public:
+		//Empty initialization (used to delete players)
 		Player();
+
+		//Full initialization with stats
 		Player(string _tag, string _sponsor, int _main, int _win, int _lose);
+
+		//Stats
 		string tag;
 		string sponsor;
 		int playerMain;
 		int wins;
 		int losses;
 		float winRate();
+
+		//Public functions
 		void print();
 		void print(int n);
 		void edit();
 		void set(string _tag, string _sponsor, int _main, int _win, int _lose);
+
 	private:
+		//Private functions
 		void addWins(int win);
 		void addLosses(int lose);
 		void changeName(string n);
@@ -33,17 +42,27 @@ struct Player
 class PlayerDB
 {
 public:
+	//Empty initialization
 	PlayerDB();
+
+	//Returns one player from the database
 	Player player(int num);
+
+	//Accepts user input; allows access to the private functions
 	void textParser();
+private:
+	//Where the magic happens (Player storage)
+	Player *players = new Player[200];
+
+	//Text parser functions
 	void showPlayer(int num);
 	void findPlayer(string input);
 	void showPlayers();
 	void addPlayer();
-private:
-	Player *players = new Player[200];
+	void removePlayer(int player);
 };
 
+//Currently unused, ideally would be used to check user input for characters much more leniently.
 enum characters
 {
 	MARIO,
