@@ -1,16 +1,3 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Blech.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  main.cpp
-  motown.cpp
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(7): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(15): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(27): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(44): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(57): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(77): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(93): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(101): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(115): warning C4018: '<': signed/unsigned mismatch
-c:\users\s199011\source\repos\smashdb\blech\motown.cpp(123): warning C4018: '<': signed/unsigned mismatch
   player.cpp
-  Generating Code...
   Blech.vcxproj -> C:\Users\s199011\source\repos\SmashDB\Debug\SmashDB.exe

@@ -1,21 +1,32 @@
 // player.h
 #pragma once
+#include <string>
+#include <fstream>
+
+using namespace std;
+using std::string;
 
 // Describes stats of a player
 struct Player
 {
 	public:
 		Player();
-		Player(char _tag[], char _sponsor[], int _main, int _win, int _lose);
-		const char * tag;
-		const char * sponsor;
+		Player(string _tag, string _sponsor, int _main, int _win, int _lose);
+		string tag;
+		string sponsor;
 		int playerMain;
 		int wins;
 		int losses;
 		float winRate();
 		void print();
+		void print(int n);
+		void edit();
+		void set(string _tag, string _sponsor, int _main, int _win, int _lose);
 	private:
-
+		void addWins(int win);
+		void addLosses(int lose);
+		void changeName(string n);
+		void changeSponsor(string s);
 };
 
 // Contains all players and resulting data
@@ -24,10 +35,13 @@ class PlayerDB
 public:
 	PlayerDB();
 	Player player(int num);
+	void textParser();
 	void showPlayer(int num);
+	void findPlayer(string input);
+	void showPlayers();
 	void addPlayer();
 private:
-	Player players[200];
+	Player *players = new Player[200];
 };
 
 enum characters

@@ -1,12 +1,16 @@
 //motown.cpp
 #include "motown.h"
 #include <iostream>
+#include <string>
+
+using namespace std;
+using std::string;
 
 void printNumbers(int nums[], size_t size)
 {
 	for (int i = 0; i < size; ++i)
 	{
-		std::cout << nums[i] << std::endl;
+		cout << nums[i] << endl;
 	}
 }
 
@@ -14,7 +18,7 @@ void belPrint(char string[])
 {
 	for (int i = 0; i < strlen(string); i++)
 	{
-		std::cout << string[i];
+		cout << string[i];
 		if (string[i] == '\0')
 		{
 			break;
@@ -26,7 +30,7 @@ void belPrint(const char* string)
 {
 	for (int i = 0; i < strlen(string); i++)
 	{
-		std::cout << string[i];
+		cout << string[i];
 		if (string[i] == '\0')
 		{
 			break;
@@ -34,41 +38,62 @@ void belPrint(const char* string)
 	}
 }
 
+void belPrint(string str)
+{
+	cout << str;
+}
+
 void belPrint(int num)
 {
-	std::cout << num;
+	cout << num;
+}
+
+void belPrint(float num)
+{
+	cout << num;
 }
 
 void belPrintLine(char string[])
 {
 	for (int i = 0; i < strlen(string); i++)
 	{
-		std::cout << string[i];
+		cout << string[i];
 		if (string[i] == '\0')
 		{
 			break;
 		}
 	}
-	std::cout << std::endl;
+	cout << endl;
 }
 
 void belPrintLine(const char* string)
 {
 	for (int i = 0; i < strlen(string); i++)
 	{
-		std::cout << string[i];
+		cout << string[i];
 		if (string[i] == '\0')
 		{
 			break;
 		}
 	}
-	std::cout << std::endl;
+	cout << endl;
+}
+
+void belPrintLine(string str)
+{
+	std::cout << str << std::endl;
 }
 
 void belPrintLine(int num)
 {
-	std::cout << num;
-	std::cout << std::endl;
+	cout << num;
+	cout << endl;
+}
+
+void belPrintLine(float num)
+{
+	cout << num;
+	cout << endl;
 }
 
 
@@ -100,7 +125,7 @@ void ToLower(char string[])
 	}
 	for (int i = 0; i < strlen(lower); i++)
 	{
-		std::cout << lower[i];
+		cout << lower[i];
 		if (lower[i] == '\0')
 		{
 			break;
@@ -122,11 +147,12 @@ void ToUpper(char string[])
 	}
 	for (int i = 0; i < strlen(upper); i++)
 	{
-		std::cout << upper[i];
+		cout << upper[i];
 		if (upper[i] == '\0')
 		{
 			break;
 		}
 	}
-	std::cout << std::endl;
+	cout << std::endl;
 }
+void belIgnore() { std::cin.ignore(INT_MAX, '\n'); };
