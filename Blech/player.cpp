@@ -1,9 +1,7 @@
 // player.cpp
 #include "player.h"
 #include "motown.h"
-#include <iostream>
-#include <string>
-
+#include <vector>
 using namespace std;
 using std::string;
 
@@ -211,11 +209,21 @@ void Player::set(string _tag, string _sponsor, int _main, int _win, int _lose)
 
 PlayerDB::PlayerDB()
 {
-	for (int a = 0; a < 200; a++)
-	{
-		players[a] = Player();
-	}
+	belPrintLine("Melee-CircuitDB 1.0\nCopyright 2019 Bel Industries\nNo copyright intended");
+	belPrintLine("");
+	belPrintLine("Enter desired database size.");
+	int dbSize = 0;
+	std::cin >> dbSize;
+	initArray(dbSize);
 }
+
+void PlayerDB::intro()
+{
+	belPrintLine("Melee-CircuitDB 1.0\nCopyright 2019 Bel Industries\nNo copyright intended");
+	belPrintLine("");
+	belPrintLine("Type 'help' for help!");
+}
+
 void PlayerDB::textParser()
 {
 	//Gets text input to activate player-related functions.
@@ -233,6 +241,7 @@ void PlayerDB::textParser()
 		belPrintLine(" - showall	- show all players' stats");
 		belPrintLine(" - find		- search for players by tag (use this to quickly retrieve numerical IDs)");
 		belPrintLine(" - edit		- edit one player's stats (using numerical ID)");
+		belPrintLine(" - save		- save all data to text file");
 	}
 	if (input == "add")
 	{
@@ -296,11 +305,17 @@ void PlayerDB::textParser()
 	if (input == "find")
 	{
 		string find = "";
-		belPrint("Enter player's tag. All matching results will be shown.");
+		belPrint("Enter player tag. All matching results will be shown. >");
 		getline(std::cin, find);
 		belPrintLine("");
 		findPlayer(find);
 
+	}
+	if (input == "save")
+	{
+		saveFile();
+		belPrint("Database saved to ");
+		belPrintLine(filename);
 	}
 }
 
@@ -344,35 +359,23 @@ void PlayerDB::addPlayer()
 	}
 
 	belPrintLine("");
-	bool foo = false;
-	//Searches for the first "empty" index in the array
-	for (int c = 0; c < 200; c++)
-	{
-		if (foo) break;
-		if (players[c].tag == "")
-		{
-			//Initialize player with user values
-			players[c].set(name, sponsor, main, 0, 0);
-			belPrint("Player ");
-			belPrint(name);
-			belPrintLine(" added to database.");
-			foo = true;
-			break;
-		}
-	}
+	players.insert(players.size, new Player(name, sponsor, main, 0, 0));
+	belPrint("Player ");
+	belPrint(name);
+	belPrintLine(" added to database.");
 }
 
 //Empties a player entry, effectively deleting them.
 //The index is freed, so the next player added will take their place.
 void PlayerDB::removePlayer(int player)
 {
-	players[player] = Player();
+	players.erase(player);
 }
 
 void PlayerDB::findPlayer(string input)
 {
 	int matches = 0;
-	for (int p = 0; p < 200; p++)
+	for (int p = 0; p < allocatedElements; p++)
 	{
 		if (players[p].tag == input)
 		{
@@ -395,7 +398,10 @@ void PlayerDB::showPlayer(int num)
 }
 void PlayerDB::showPlayers()
 {
-	for (int p = 0; p < 200; p++)
+	belPrint("There are ");
+	belPrint(usedElements);
+	belPrintLine("players.");
+	for (int p = 0; p < allocatedElements; p++)
 	{
 		if (players[p].tag != "")
 		{
@@ -407,7 +413,27 @@ void PlayerDB::showPlayers()
 	
 }
 
+void PlayerDB::saveFile()
+{
+	save.openOut(filename);
+	for (int i = 0; i < allocatedElements; i++)
+	{
+		save.belWriteLine("/");
+		save.belWriteLine(players[i].sponsor);
+		save.belWriteLine(players[i].tag);
+		save.belWriteLine(players[i].playerMain);
+		save.belWriteLine(players[i].wins);
+		save.belWriteLine(players[i].losses);
+	}
+	save.close();
+}
+
 Player PlayerDB::player(int num)
 {
 	return players[num];
+}
+
+void PlayerDB::initArray(int initialSize)
+{
+
 }

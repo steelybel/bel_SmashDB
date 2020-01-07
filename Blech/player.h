@@ -1,7 +1,7 @@
-// player.h
+// player.h - Player and PlayerDB classes
 #pragma once
-#include <string>
-#include <fstream>
+#include "motown.h"
+#include <vector>
 
 using namespace std;
 using std::string;
@@ -38,28 +38,46 @@ struct Player
 		void changeSponsor(string s);
 };
 
+class DynArray
+{
+public:
+	DynArray();
+	Player* data;
+	int allocated;
+	int used;
+};
+
 // Contains all players and resulting data
 class PlayerDB
 {
 public:
 	//Empty initialization
 	PlayerDB();
-
 	//Returns one player from the database
 	Player player(int num);
-
+	//Filename for saving data
+	const char * filename;
 	//Accepts user input; allows access to the private functions
 	void textParser();
+	void intro();
 private:
-	//Where the magic happens (Player storage)
-	Player *players = new Player[200];
-
+	//An inline method of saving/loading data to a text file
+	TextFile save;
+	//Where the magic happens (Player storage dynamic array)
+	std::vector<Player> players;
+	//Memory allocation
+	int allocatedElements;
+	//Number of elements within the array of players
+	int usedElements;
+	//Initializing dynamic array
+	void initArray(int initialSize);
 	//Text parser functions
 	void showPlayer(int num);
 	void findPlayer(string input);
 	void showPlayers();
 	void addPlayer();
 	void removePlayer(int player);
+	void saveFile();
 };
 
 //Currently unused, ideally would be used to check user input for characters much more leniently.

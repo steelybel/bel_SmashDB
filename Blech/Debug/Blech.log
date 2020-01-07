@@ -1,5 +1,35 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Blech.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
   player.cpp
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2414): error C2100: illegal indirection
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2434): note: see reference to function template instantiation '_OutIt std::_Copy_unchecked1<_InIt,_OutIt>(_InIt,_InIt,_OutIt,std::_General_ptr_iterator_tag)' being compiled
+          with
+          [
+              _OutIt=int,
+              _InIt=Player *
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2445): note: see reference to function template instantiation '_OutIt std::_Copy_unchecked<_Ty*,_Iter>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=int,
+              _Ty=Player,
+              _Iter=int,
+              _InIt=Player *
+          ]
+  c:\users\s199011\source\repos\smashdb\blech\player.cpp(383): note: see reference to function template instantiation '_OutIt std::copy<Player*,int>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=int,
+              _InIt=Player *
+          ]
+c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2414): error C2440: '=': cannot convert from '_Ty' to '_OutIt'
+          with
+          [
+              _Ty=Player
+          ]
+          and
+          [
+              _OutIt=int
+          ]
+  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\xutility(2414): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
   Generating Code...
-  Blech.vcxproj -> C:\Users\s199011\source\repos\SmashDB\Debug\SmashDB.exe
